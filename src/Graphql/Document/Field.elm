@@ -15,32 +15,7 @@ hashedAliasName field =
 
 maybeAliasHash : RawField -> Maybe Int
 maybeAliasHash field =
-    (case field of
-        Composite name arguments children ->
-            if List.isEmpty arguments then
-                Nothing
-
-            else
-                arguments
-                    |> Argument.serialize
-                    |> Just
-
-        Leaf { typeString, fieldName } arguments ->
-            -- __typename fields never takes arguments or has a different type,
-            -- so they don't need to be aliased
-            -- see https://github.com/dillonkearns/elm-graphql/issues/120
-            if fieldName == "__typename" then
-                Nothing
-
-            else
-                arguments
-                    |> Argument.serialize
-                    |> List.singleton
-                    |> List.append [ typeString ]
-                    |> String.concat
-                    |> Just
-    )
-        |> Maybe.map (hashString 0)
+    Nothing
 
 
 alias : RawField -> Maybe String
